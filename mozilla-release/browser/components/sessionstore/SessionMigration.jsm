@@ -60,7 +60,10 @@ var SessionMigrationInternal = {
     });
     let url = aRestorePageURL;
     let formdata = {id: {sessionData: state}, url};
-    return {windows: [{tabs: [{entries: [{url}], formdata}]}]};
+    return {
+      windows: [{tabs: [{entries: [{url}], formdata}]}],
+      session: {migrated: true}
+    };
   },
   /**
    * Asynchronously read session restore state (JSON) from a path

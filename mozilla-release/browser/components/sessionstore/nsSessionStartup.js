@@ -206,8 +206,12 @@ SessionStartup.prototype = {
       // session restore was written, etc.
       Services.telemetry.getHistogramById("SHUTDOWN_OK").add(!this._previousSessionCrashed);
 
+      // Migrated session is essentially the same as recovery page.
+      const sessionMigrated = this._initialState && this._initialState.session
+          && !!this._initialState.session.migrated;
+
       // set the startup type
-      if (this._previousSessionCrashed && resumeFromCrash)
+      if (this._previousSessionCrashed && resumeFromCrash || sessionMigrated)
         this._sessionType = Ci.nsISessionStartup.RECOVER_SESSION;
       else if (!this._previousSessionCrashed && shouldResumeSession)
         this._sessionType = Ci.nsISessionStartup.RESUME_SESSION;
